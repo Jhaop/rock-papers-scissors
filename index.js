@@ -1,3 +1,17 @@
+const rockBtn = document.getElementById('rock');
+const paperBtn = document.getElementById('paper');
+const scissorsBtn = document.getElementById('scissors');
+const h2 = document.getElementById('result');
+const gameWinner = document.getElementById('gameWinner');
+const playerPoints = document.getElementById('playerPoints');
+const computerPoints = document.getElementById('computerPoints');
+let playerPointsCounter = 0;
+let computerPointsCounter = 0;
+playerPoints.textContent = playerPointsCounter;
+computerPoints.textContent = computerPointsCounter;
+const restartButton = document.getElementById('restart');
+restartButton.addEventListener('click', restartGame);
+
 function getComputerChoice() {
     let rand = Math.floor(Math.random() * 3);
     if(rand < 1) 
@@ -8,7 +22,7 @@ function getComputerChoice() {
             return "scissors";
 }
 
-function rockpaperscissors(playerSelection, computerSelection) {
+function playRound(playerSelection, computerSelection) {
     playerSelection = playerSelection.toLowerCase();
     if(playerSelection === computerSelection) {
         return ("It's a draw!");
@@ -24,30 +38,55 @@ function rockpaperscissors(playerSelection, computerSelection) {
             return ("You lose! Scissors beats Paper");
     } else 
         if(computerSelection === "paper")
-            return ("You win! Scissors beat Paper");
+            return ("You win! Scissors beats Paper");
         else 
             return ("You lose! Rock beats Scissors");
 }
 
+
+
+rockBtn.addEventListener('click', () => {
+    if(gameWinner.textContent !== '') 
+        restartGame();       
+    h2.textContent = playRound('rock', getComputerChoice());
+    game();
+});
+
+paperBtn.addEventListener('click', () => {
+    if(gameWinner.textContent !== '') 
+        restartGame();       
+    h2.textContent = playRound('paper', getComputerChoice());
+    game();
+});
+
+scissorsBtn.addEventListener('click', () => {
+    if(gameWinner.textContent !== '') 
+        restartGame();       
+    h2.textContent = playRound('scissors', getComputerChoice());
+    game();
+});
+
+
+
 function game() {
-    let playerSelection;
-    let result;
-    let playerWon = 0;
-    let computerWon = 0;
-    let resultString;
-    for(let i = 0; i < 5; i++) {
-        playerSelection = prompt("Insert choice (Rock/Paper/Scissors)");
-        result = rockpaperscissors(playerSelection, getComputerChoice());
-        resultString = result.slice(4,7);
-        if(resultString === "win") {
-            playerWon++;
-            console.log("Player point");
-        }
-        else if (resultString === "los") {
-            computerWon++;
-            console.log("Computer point");
-        } else console.log("Draw");
-        console.log("\n");
+    if (h2.textContent.slice(0,7) === 'You win') {
+        playerPointsCounter++;
+        playerPoints.textContent = playerPointsCounter; 
+    } else if (h2.textContent.slice(0,8) === 'You lose') {
+        computerPointsCounter++;
+        computerPoints.textContent = computerPointsCounter;
     }
-    console.log(`Final result - Player: ${playerWon} , Computer ${computerWon}`);
+    if(playerPointsCounter === 5) {
+        gameWinner.textContent = 'You won the game!';
+    } else if (computerPointsCounter === 5) {
+        gameWinner.textContent = 'You lost the game!';
+    }
+}
+
+function restartGame() {
+    playerPointsCounter = 0;
+    computerPointsCounter = 0;
+    computerPoints.textContent = computerPointsCounter;
+    playerPoints.textContent = playerPointsCounter;
+    gameWinner.textContent= '';
 }
