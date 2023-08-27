@@ -1,0 +1,40 @@
+body {
+    background-color:darkgoldenrod;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 75px;
+    margin-bottom: 150px;
+    gap: 40px;
+}
+
+.result-container {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    padding: 15px;
+    background-color: darkgrey;
+    font-weight: 800;
+}
+
+.scores{
+    justify-content: center;
+    display: flex;
+    gap: 50px;
+}
+
+.winner-container {
+    display: flex;
+    justify-content: center;
+}
+
+.restart-container {
+    display: flex;
+    justify-content: center;
+}
+
+
